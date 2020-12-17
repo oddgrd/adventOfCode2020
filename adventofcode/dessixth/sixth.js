@@ -10,16 +10,16 @@ function parseUniqueAnswers(arr) {
     return String.prototype.concat(...new Set(str));
 };
 
-//Returns object with answer as key and occurences as value, and group size
+//Returns object with answer as key and occurrences as value, and group size
 function parseAnswerCount(arr) {
     const groupSize = arr.length;
     const charArray = arr.join("").split("");
 
-    const occurences = charArray.reduce((acc, value) => ({
+    const occurrences = charArray.reduce((acc, value) => ({
         ...acc,
         [value]: (acc[value] || 0) + 1
     }), {});
-    return [occurences, groupSize];
+    return [occurrences, groupSize];
 };
 
 //Returns the count of unanimous answers from a group
