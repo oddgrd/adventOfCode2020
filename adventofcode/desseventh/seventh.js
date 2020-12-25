@@ -29,7 +29,7 @@ function parseBagContent(str) {
     const split = slice.split(" ");
     //if first word in sliced string is no, bag contains nothing
     if (split[0] === "no") {
-        return "Empty";
+        return [];
     };
     const content = slice.replace(/bags|bag|\.|\d/gi, "").split(",").map(x => x.trim());
     return content;
@@ -40,7 +40,7 @@ function parseBag(str) {
 };
 
 function goDeeper(bagContent, arr) {
-    if (bagContent === "Empty" || bagContent.length === 0) {
+    if (bagContent.length === 0) {
         return false;
     }
     if (bagContent.includes("shiny gold")) {
