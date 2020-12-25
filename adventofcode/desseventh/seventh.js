@@ -75,7 +75,7 @@ function main() {
         }
     };
 
-    return goldCounter;
+    return `Part one: ${goldCounter}`;
 };
 
 var start = new Date()
