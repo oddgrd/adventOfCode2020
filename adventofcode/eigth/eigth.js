@@ -6,7 +6,12 @@ class Instruction {
     constructor(key, value) {
         this.key = key;
         this.value = value;
-    }
+        this.count = 0;
+        this.flipped = false;
+    };
+    flipSwitch() {
+        this.key === "jmp" ? this.key = "nop" : this.key = "jmp";
+    };
 };
 
 function parseInstruction(str) {
@@ -19,34 +24,31 @@ function parseInstruction(str) {
 
 function runGame(instructions) {
     let accumulator = 0;
-    let visitedIdx = [];
     for (let i = 0; i < instructions.length; i++) {
-        if (visitedIdx.includes(i)) {
+        if (instructions[i].count === 1) {
             return accumulator; 
         } else {   
             switch (instructions[i].key) {
                 case "acc":
-                    visitedIdx.push(i);
+                    instructions[i].count++;
                     accumulator += instructions[i].value;
                     break;
                 case "jmp":
-                    visitedIdx.push(i);
+                    instructions[i].count++;
                     i += instructions[i].value - 1;
                 case "nop":
-                    visitedIdx.push(i);
+                    instructions[i].count++;
                     break;
             }
         }
     }
-
 };
-
 
 function main() {
     const data  = fs.readFileSync("eigthdata.txt", "utf-8");
     const split = data.split(/\n/);
-    const instructions = split.map(x => parseInstruction(x));
-    
+    const instructions = split.filter(x => x !== "").map(x => parseInstruction(x));
+
     return `Part one: ${runGame(instructions)}`;
 };
 
