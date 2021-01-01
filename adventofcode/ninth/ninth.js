@@ -17,8 +17,8 @@ function searchPreamble(preamble, target) {
         for (let y = 0; y < preambleReversed.length; y++) {
             if (sumBool(preamble[i], preambleReversed[y], target)) {
                 return false;
-            }
-        }
+            };
+        };
     };
     return target;
 };
