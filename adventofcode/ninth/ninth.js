@@ -37,6 +37,7 @@ function main(){
         
         if (result) {
             weakness = result;
+            break;
         };
     };
 
