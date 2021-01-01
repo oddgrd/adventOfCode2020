@@ -29,7 +29,7 @@ function main(){
     const numbers = split.filter(x => x !== "").map(x => parseInt(x));
     
     let weakness;
-    var y = 0;
+    let y = 0;
     for (let i = 25; i < numbers.length; i++) {
         let preamble = parsePreamble(numbers, y);
         y++;
