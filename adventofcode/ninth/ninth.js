@@ -19,7 +19,7 @@ function searchPreamble(preamble, target) {
                 return false;
             }
         }
-    }
+    };
     return target;
 };
 
@@ -37,8 +37,25 @@ function findInvalid(numbers) {
     return "No invalid";
 };
 
-function findContiguos(numbers, target) {
-    let contiguos = [];
+function findContiguous(numbers, target) {
+    let contiguous = [];
+    for (let i = 25; i < numbers.length; i++) {
+        contiguous.push(numbers[i]);
+        let sum = numbers[i];
+        let y = 1;
+
+        while (sum < target) {
+            contiguous.push(numbers[i + y]);
+            sum += numbers[i + y];
+            y++;
+        };
+        if (sum === target) {
+            return Math.min(...contiguous) + Math.max(...contiguous);
+        } else {
+            contiguous = [];
+        };
+    };
+    return "No contiguous";
 };
 
 function main(){
@@ -46,8 +63,9 @@ function main(){
     const split = data.split(/\n/);
     const numbers = split.filter(x => x !== "").map(x => parseInt(x));
     
-    return `First invalid number: ${findInvalid(numbers)}`;
+    let invalid = findInvalid(numbers);
+    let contiguous = findContiguous(numbers, invalid);
+    return `First invalid number: ${invalid}, contiguous: ${contiguous}`;
 };
 
 console.log(main());
-
