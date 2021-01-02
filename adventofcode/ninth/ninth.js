@@ -3,7 +3,7 @@
 const fs = require("fs");
 
 function searchPreamble(preamble, target) {
-    for (let i = 0; i < preamble.length; i++) {
+    for (let i = 0; i < preamble.length - 1; i++) {
         for (let j = i + 1; j < preamble.length; j++) {
             if (preamble[i] + preamble[j] === target) {
                 return false;
