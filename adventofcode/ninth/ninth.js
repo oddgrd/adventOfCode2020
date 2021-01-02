@@ -3,10 +3,9 @@
 const fs = require("fs");
 
 function searchPreamble(preamble, target) {
-    const preambleReversed = [...preamble].reverse();
     for (let i = 0; i < preamble.length; i++) {
-        for (let j = 0; j < preambleReversed.length; j++) {
-            if (preamble[i] + preambleReversed[j] === target) {
+        for (let j = i + 1; j < preamble.length; j++) {
+            if (preamble[i] + preamble[j] === target) {
                 return false;
             };
         };
@@ -20,10 +19,9 @@ function findInvalid(numbers) {
         let preamble = numbers.slice(j, 25 + j);
         j++;
         if (searchPreamble(preamble, numbers[i])) {
-            return number[i];
+            return numbers[i];
         };
     };
-    return "No invalid";
 };
 
 function findContiguous(numbers, target) {
@@ -44,7 +42,6 @@ function findContiguous(numbers, target) {
             contiguous = [];
         };
     };
-    return "No contiguous";
 };
 
 function main(){
@@ -54,7 +51,7 @@ function main(){
     
     let invalid = findInvalid(numbers);
     let contiguous = findContiguous(numbers, invalid);
-    return `First invalid number: ${invalid}, contiguous: ${contiguous}`;
+    return `First invalid number: ${invalid}, encryption weakness: ${contiguous}`;
 };
 
 console.log(main());
