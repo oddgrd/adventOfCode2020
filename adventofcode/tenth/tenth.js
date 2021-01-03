@@ -11,9 +11,8 @@ function sortArr(arr) {
 
 function findDifferences(adapters) {
     let differences = [];
-    let i = 1;
     for (let j = 0; j < adapters.length - 1; j++) {
-        differences.push(adapters[j + i] - adapters[j]);
+        differences.push(adapters[j + 1] - adapters[j]);
     };
     return differences;
 };
