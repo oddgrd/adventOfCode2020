@@ -19,8 +19,8 @@ function findDifferences(adapters) {
 };
 
 function multiplyDifferences(differences) {
-    let threes = differences.filter(x => x !== 1);
     let ones = differences.filter(x => x !== 3);
+    let threes = differences.filter(x => x !== 1);
     return ones.length * threes.length;
 };
 
