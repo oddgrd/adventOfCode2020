@@ -51,7 +51,7 @@ function main(){
     
     let invalid = findInvalid(numbers);
     let contiguous = findContiguous(numbers, invalid);
-    return `First invalid number: ${invalid}, encryption weakness: ${contiguous}`;
+    return `First invalid: ${invalid}, encryption weakness: ${contiguous}`;
 };
 
 console.log(main());
