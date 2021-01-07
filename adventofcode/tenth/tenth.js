@@ -18,9 +18,41 @@ function findDifferences(adapters) {
 };
 
 function multiplyDifferences(differences) {
-    let ones = differences.filter(x => x !== 3);
-    let threes = differences.filter(x => x !== 1);
+    const ones = differences.filter(x => x !== 3);
+    const threes = differences.filter(x => x !== 1);
     return ones.length * threes.length;
+};
+
+function range(start, end) {
+    let range = [];
+    for (let i = start; i < end; i++) {
+        range.push(i);
+    };
+    return range;
+};
+
+//Memoized depth first algorithm to find total number of distinct
+//combinations of adapters from outlet to device. Starting at the outlet, 
+//to compute the the first adapter, we need to know the next three 
+//adapters, to compute the second we need the next three and so on until
+//we reach our device. Using a naive approach, you would have to compute
+//these subproblems over and over again when searching for all possible 
+//paths. With a dynamic programming approach using memoization, when we 
+//compute a subproblem once, we store it in an obj so we dont have to
+//compute it again.
+function findPaths(adjList, a, memo = {}) {
+    if (memo.hasOwnProperty(a)){
+        return memo[a];
+    } else if (adjList.hasOwnProperty(a)){
+        let sum = 0;
+        for (let i = 0; i < adjList[a].length; i++){
+            sum += findPaths(adjList, adjList[a][i], memo);
+        }
+        memo[a] = sum;
+        return memo[a];
+    } else {
+        return 1;
+    }
 };
 
 function main() {
@@ -30,11 +62,41 @@ function main() {
         .filter(x => x !== "")
         .map(x => parseInt(x));
     const device = Math.max(...adapters) + 3;
-    adapters.unshift(0); //outlet
-    adapters.push(device);
+    
+    //Sort adapters, add socket and device
+    const sorted = sortArr([0, ...adapters, device]);
+
+    //Create directed adjacency list (js obj with adapter as key and 
+    //possible connections(edges) as values in an array)
+    let adjList = {}
+    for (let i = 0; i < sorted.length; i++){
+        let r = range(sorted[i] + 1, sorted[i] + 4);
+        let arr = [];
+        for (let j = 0; j < r.length; j++){
+            if (sorted.includes(r[j])) {
+                arr.push(r[j]);
+                adjList[sorted[i]] = arr;
+            }
+        }
+    };
 
     return `1-jolt diff multiplied by 3-jolt diff: 
-    ${multiplyDifferences(findDifferences(sortArr(adapters)))}`;
+    ${multiplyDifferences(findDifferences(sorted))},
+    Total number of distinct paths: ${findPaths(adjList, 0)}`;
 };
 
 console.log(main());
+
+//log runtime (result: 5ms)
+var start = new Date()
+var hrstart = process.hrtime()
+var simulateTime = 5
+
+setTimeout(function () {
+  // execution time simulated with setTimeout function
+  var end = new Date() - start,
+    hrend = process.hrtime(hrstart)
+
+  console.info('Execution time: %dms', end)
+  console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)
+}, simulateTime)
