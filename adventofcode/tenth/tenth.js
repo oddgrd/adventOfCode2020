@@ -32,14 +32,7 @@ function range(start, end) {
 };
 
 //Memoized depth first algorithm to find total number of distinct
-//combinations of adapters from outlet to device. Starting at the outlet, 
-//to compute the the first adapter, we need to know the next three 
-//adapters, to compute the second we need the next three and so on until
-//we reach our device. Using a naive approach, you would have to compute
-//these subproblems over and over again when searching for all possible 
-//paths. With a dynamic programming approach using memoization, when we 
-//compute a subproblem once, we store it in an obj so we dont have to
-//compute it again.
+//combinations of adapters from outlet to device. 
 function findPaths(adjList, a, memo = {}) {
     if (memo.hasOwnProperty(a)){
         return memo[a];
