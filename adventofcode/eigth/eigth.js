@@ -13,21 +13,19 @@ class Instruction {
 };
 
 function parseInstruction(str) {
-    let split = str.split(" ");
-    let key = split[0];
-    let value = parseInt(split[1]);
-    let instruction = new Instruction(key, value);
+    const split = str.split(" ");
+    const key = split[0];
+    const value = parseInt(split[1]);
+    const instruction = new Instruction(key, value);
     return instruction;
 };
 
-function runGame(instructions) {
+function runGame(instructions, partTwo = false) {
     let accumulator = 0;
     let visitedIdx = [];
     for (let i = 0; i < instructions.length; i++) {
         if (visitedIdx.includes(i)) {
-            //For part one I returned accumulator here, for part two
-            //I changed it to return "Infinite"
-            return "Infinite"; 
+            return (partTwo ? "Infinite" : accumulator);
         } else {
             switch (instructions[i].key) {
                 case "acc":
@@ -51,21 +49,21 @@ function runGameTwo(instructions) {
     for (let i = 0; i < instructions.length; i++) {
         if (instructions[i].key === "jmp" || instructions[i].key === "nop") {
             instructions[i].flipKey();
-            var result = runGame(instructions);
+            let result = runGame(instructions, true);
             instructions[i].flipKey();
             if (result !== "Infinite") {
                 return result;
             }
         }
-    }
-    return "All infinite";
+    };
 };
 
 function main() {
     const data  = fs.readFileSync("eigthdata.txt", "utf-8");
-    const split = data.split(/\n/);
-    const instructions = split.filter(x => x !== "").map(x => parseInstruction(x));
-
+    const instructions = data
+        .split(/\n/)
+        .filter(x => x !== "")
+        .map(x => parseInstruction(x));
     return `Part one: ${runGame(instructions)} Part two: ${runGameTwo(instructions)}`;
 };
 
