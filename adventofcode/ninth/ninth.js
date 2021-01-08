@@ -46,11 +46,12 @@ function findContiguous(numbers, target) {
 
 function main(){
     const data = fs.readFileSync("ninthdata.txt", "utf-8");
-    const split = data.split(/\n/);
-    const numbers = split.filter(x => x !== "").map(x => parseInt(x));
-    
-    let invalid = findInvalid(numbers);
-    let contiguous = findContiguous(numbers, invalid);
+    const numbers = data
+        .split(/\n/)
+        .filter(x => x !== "")
+        .map(x => parseInt(x));
+    const invalid = findInvalid(numbers);
+    const contiguous = findContiguous(numbers, invalid);
     return `First invalid: ${invalid}, encryption weakness: ${contiguous}`;
 };
 
