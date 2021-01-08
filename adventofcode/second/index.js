@@ -1,25 +1,25 @@
-const fs = require('fs');
+"use strict";
 
-const reNewline = /\n/;
+const fs = require('fs');
 
 class PasswordEntry {
     constructor(idxs, char, password) {
         this.idxs = idxs
         this.char = char
         this.password = password
-    }
+    };
 
     isValidPassword() {
-        let charCount = this.password.split("").filter(c => c === this.char);
+        const charCount = this.password.split("").filter(c => c === this.char);
         return charCount.length >= this.idxs[0] && charCount.length <= this.idxs[1];
-    }
+    };
     isValidSledRental() {
         return (this.password[this.idxs[0] - 1] === this.char) ^ (this.password[this.idxs[1] - 1] === this.char);
-    }
-}
+    };
+};
 
 function parseRuleRange(str) {
-    let nums = str.split("-");
+    const nums = str.split("-");
     return nums.map(num => parseInt(num));
 };
 
@@ -28,31 +28,32 @@ function parseRuleChar(str) {
 };
 
 function parsePasswordEntry(str) {
-    let strSplit = str.split(" ");
-    let idxs = parseRuleRange(strSplit[0]);
-    let char = parseRuleChar(strSplit[1])
-    let password = strSplit[2];
-
-    let passwordEntries = new PasswordEntry(idxs, char, password);
-    return passwordEntries;
+    const strSplit = str.split(" ");
+    const idxs = parseRuleRange(strSplit[0]);
+    const char = parseRuleChar(strSplit[1])
+    const password = strSplit[2];
+    const passwordEntry = new PasswordEntry(idxs, char, password);
+    return passwordEntry;
 };
 
 function main() {
-    let getData = fs.readFileSync("twostardata.txt", "utf-8");
-    let dataSplit = getData.toString().split(reNewline).filter(element => element != "");
-    let passwordEntries = dataSplit.map(element => parsePasswordEntry(element));
+    const data = fs.readFileSync("twostardata.txt", "utf-8");
+    const passwordEntries = data
+        .split(/\n/)
+        .filter(x => x !== "")
+        .map(x => parsePasswordEntry(x));
+    let partOne = 0;
+    let partTwo = 0;
 
-    let validOneStar = 0;
-    let validSledRental = 0;
-
-    for (let i = 0; i < dataSplit.length; i++) {
+    for (let i = 0; i < passwordEntries.length; i++) {
         if (passwordEntries[i].isValidPassword()) {
-            validOneStar++;
+            partOne++;
         }
         if (passwordEntries[i].isValidSledRental()) {
-            validSledRental++;
+            partTwo++;
         }
     };
-    return `validOneStar: ${validOneStar}, validSledRental ${validSledRental}`;
+    return `Part one: ${partOne}, Part two ${partTwo}`;
 };
+
 console.log(main());
