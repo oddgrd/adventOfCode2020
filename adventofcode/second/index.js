@@ -8,7 +8,6 @@ class PasswordEntry {
         this.char = char
         this.password = password
     };
-
     isValidPassword() {
         const charCount = this.password.split("").filter(c => c === this.char);
         return charCount.length >= this.idxs[0] && charCount.length <= this.idxs[1];
