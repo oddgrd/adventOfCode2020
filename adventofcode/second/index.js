@@ -44,7 +44,6 @@ function main() {
         .map(x => parsePasswordEntry(x));
     let partOne = 0;
     let partTwo = 0;
-
     for (let i = 0; i < passwordEntries.length; i++) {
         if (passwordEntries[i].isValidPassword()) {
             partOne++;
