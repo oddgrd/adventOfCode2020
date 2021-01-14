@@ -1,5 +1,7 @@
 "use strict";
 
+console.time("test");
+
 const fs = require("fs");
 
 //Function to deep copy the 2d arrays
@@ -77,6 +79,13 @@ function countOccurences(val, arr) {
     .reduce((acc, cur) => (acc += cur === val ? 1 : 0), 0);
 }
 
+//Optional countOccurences, execution time is almost identical
+// function countOccurencesRegEx(val, arr) {
+//   const re = new RegExp("#", "g");
+//   const concat = (a, b) => a.concat(b);
+//   return arr.reduce(concat, []).join("").match(re).length;
+// }
+
 function main() {
   const data = fs.readFileSync("eleventhdata.txt", "utf8");
   const rows = data
@@ -86,8 +95,11 @@ function main() {
 
   const copy = deepCopy(rows);
   const result = runGame(copy);
-
-  return countOccurences("#", result);
+  //console.log(countOccurencesRegEx("#", result));
+  return `Seats occupied after changes stop: ${countOccurences("#", result)}`;
 }
 
 console.log(main());
+
+//Execution time: ~66ms
+console.timeEnd("test");
