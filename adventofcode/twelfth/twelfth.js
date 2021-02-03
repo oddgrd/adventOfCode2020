@@ -53,12 +53,14 @@ function navigate(location, facing, instruction) {
   }
   return [loc, fac];
 }
+
 function main() {
   const data = fs.readFileSync("twelfthdata.txt", "utf8");
   const instructions = data
     .split("\n")
     .filter((x) => x !== "")
     .map((x) => [x.slice(0, 1), parseInt(x.slice(1))]);
+
   const location = { eastWest: 0, northSouth: 0 };
   const facing = "east";
   let result = [location, facing];
@@ -69,4 +71,5 @@ function main() {
     Math.abs(result[0].eastWest) + Math.abs(result[0].northSouth)
   }`;
 }
+
 console.log(main());
